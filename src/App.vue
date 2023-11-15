@@ -27,6 +27,18 @@ export default {
         text: "Doctor Appointment",
         day: "March 1st at 2:30pm",
         reminder: true,
+      },
+      {
+        id: 2,
+        text: "Doctor",
+        day: "March 1st at 2:30pm",
+        reminder: false,
+      },
+      {
+        id: 3,
+        text: "Appointment",
+        day: "March 1st at 2:30pm",
+        reminder: true,
       }
     ]
   }
