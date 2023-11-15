@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <Header title="Task Tracker"/>
-    <Tasks @delete-task="deleteTask" :tasks="tasks"/>
+    <Tasks @toggle-reminder="toggleReminder" @delete-task="deleteTask" :tasks="tasks"/>
   </div>
 </template>
 
@@ -20,11 +20,19 @@ export default {
       tasks: []
     }
   },
+  mounted() {
+    this.tasks = this.tasks.sort((a, b) => (a.reminder === b.reminder) ? 0 : a.reminder ? -1 : 1);
+  },
   methods: {
     deleteTask(id) {
       if (confirm("Are you sure?")) {
         this.tasks = this.tasks.filter((task) => task.id !== id);
+        this.tasks = this.tasks.sort((a, b) => (a.reminder === b.reminder) ? 0 : a.reminder ? -1 : 1);
       }
+    },
+    toggleReminder(id) {
+      this.tasks = this.tasks.map((task) => task.id === id ? {...task, reminder: !task.reminder} : task)
+      this.tasks = this.tasks.sort((a, b) => (a.reminder === b.reminder) ? 0 : a.reminder ? -1 : 1);
     }
   },
   created() {
