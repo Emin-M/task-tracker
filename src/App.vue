@@ -1,6 +1,9 @@
 <template>
   <div class="container">
-    <Header title="Task Tracker"/>
+    <Header :showAddTask="showAddTask" @toggle-add-task="toggleAddTask" title="Task Tracker"/>
+    <div v-show="showAddTask">
+      <AddTask @add-task="addTask"/>
+    </div>
     <Tasks @toggle-reminder="toggleReminder" @delete-task="deleteTask" :tasks="tasks"/>
   </div>
 </template>
@@ -8,31 +11,44 @@
 <script>
 import Header from "./components/Header.vue";
 import Tasks from "./components/Tasks.vue";
+import AddTask from "./components/AddTask.vue";
 
 export default {
   name: "App",
   components: {
+    AddTask,
     Header,
     Tasks
   },
   data() {
     return {
-      tasks: []
+      tasks: [],
+      showAddTask: false
     }
   },
   mounted() {
-    this.tasks = this.tasks.sort((a, b) => (a.reminder === b.reminder) ? 0 : a.reminder ? -1 : 1);
+    this.filterTasks();
   },
   methods: {
     deleteTask(id) {
       if (confirm("Are you sure?")) {
         this.tasks = this.tasks.filter((task) => task.id !== id);
-        this.tasks = this.tasks.sort((a, b) => (a.reminder === b.reminder) ? 0 : a.reminder ? -1 : 1);
+        this.filterTasks();
       }
     },
     toggleReminder(id) {
       this.tasks = this.tasks.map((task) => task.id === id ? {...task, reminder: !task.reminder} : task)
+      this.filterTasks();
+    },
+    addTask(task) {
+      this.tasks = [...this.tasks, task];
+      this.filterTasks();
+    },
+    filterTasks() {
       this.tasks = this.tasks.sort((a, b) => (a.reminder === b.reminder) ? 0 : a.reminder ? -1 : 1);
+    },
+    toggleAddTask() {
+      this.showAddTask = !this.showAddTask;
     }
   },
   created() {
