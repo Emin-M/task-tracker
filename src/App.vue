@@ -1,13 +1,13 @@
 <template>
   <div class="container">
-    <Header />
+    <Header title="Task Tracker" />
   </div>
 </template>
 
 <script>
-import Header from './components/Header.vue';
+import Header from "./components/Header.vue";
 export default {
-  name: 'App',
+  name: "App",
   components: {
     Header
   }
@@ -15,7 +15,7 @@ export default {
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap");
 
 * {
   box-sizing: border-box;
