@@ -5,6 +5,8 @@
       <AddTask @add-task="addTask"/>
     </div>
     <Tasks @toggle-reminder="toggleReminder" @delete-task="deleteTask" :tasks="tasks"/>
+    <router-view></router-view>
+    <Footer/>
   </div>
 </template>
 
@@ -12,10 +14,12 @@
 import Header from "./components/Header.vue";
 import Tasks from "./components/Tasks.vue";
 import AddTask from "./components/AddTask.vue";
+import Footer from "./components/Footer.vue";
 
 export default {
   name: "App",
   components: {
+    Footer,
     AddTask,
     Header,
     Tasks
@@ -45,7 +49,7 @@ export default {
     },
     async toggleReminder(id) {
       const taskToToggle = await this.fetchTask(id);
-      const updTask = { ...taskToToggle, reminder: !taskToToggle.reminder };
+      const updTask = {...taskToToggle, reminder: !taskToToggle.reminder};
 
       const res = await fetch(`api/tasks/${id}`, {
         method: "PUT",
